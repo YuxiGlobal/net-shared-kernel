@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ServiceFabric.Data" Version="2.8.219" />
+    <PackageReference Include="TrackableEntities.Common" Version="2.5.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Yuxi.SharedKernel.Data\Yuxi.SharedKernel.Data.csproj" />
+    <ProjectReference Include="..\Yuxi.SharedKernel.Specification\Yuxi.SharedKernel.Specification.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TrackableEntities.Common">
+      <HintPath>..\..\..\.nuget\packages\trackableentities.common\2.5.6\lib\portable-net40+sl50+win+wpa81+wp80\TrackableEntities.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
