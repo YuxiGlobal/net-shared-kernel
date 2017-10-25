@@ -50,26 +50,31 @@
 
         public T Find(params object[] keyValues)
         {
+            // Should not implement synchronous methods when using service fabric programming model
             throw new NotImplementedException();
         }
 
         public void UpsertGraph(T entity)
         {
+            // Should not implement synchronous methods when using service fabric programming model
             throw new NotImplementedException();
         }
 
         public IQueryFluent<T> Query(ExpressionSpecification<T> specification)
         {
+            // Should not implement synchronous methods when using service fabric programming model
             throw new NotImplementedException();
         }
 
         public IQueryFluent<T> Query()
         {
+            // Should not implement synchronous methods when using service fabric programming model
             throw new NotImplementedException();
         }
 
         public IQueryable<T> Queryable()
         {
+            // Should not implement synchronous methods when using service fabric programming model
             throw new NotImplementedException();
         }
 
@@ -99,9 +104,8 @@
 
         public void Update(T entity)
         {
-            var id = entity.Id;
-
-            Task.Run(() => Update(id, entity));
+            // Should not implement synchronous methods when using service fabric programming model
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -119,7 +123,8 @@
 
         void IRepository<T>.Add(T entity)
         {
-            Task.Run(() => Add(entity));
+            // Should not implement synchronous methods when using service fabric programming model
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -128,6 +133,7 @@
 
         public IRepository<T1> GetRepository<T1>() where T1 : class, ITrackable
         {
+            // Should not implement synchronous methods when using service fabric programming model
             throw new NotImplementedException();
         }
 
@@ -143,11 +149,13 @@
 
         void IRepository<T>.Delete(T entity)
         {
-            Task.Run(() => Delete(entity));
+            // Should not implement synchronous methods when using service fabric programming model
+            throw new NotImplementedException();
         }
 
         public void Delete(params object[] keyValues)
         {
+            // Should not implement synchronous methods when using service fabric programming model
             throw new NotImplementedException();
         }
 
