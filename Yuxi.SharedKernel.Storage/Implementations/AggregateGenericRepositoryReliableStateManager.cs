@@ -35,31 +35,17 @@
 
         #endregion
 
-        #region Querys
-
-        public async Task<T> Find(string id)
-        {
-            var entity = (await _aggreateStorage.TryGetValueAsync(_transaction, id)).Value;
-            var coreEntity = _mapper.MapToCore(entity);
-            return coreEntity;
-        }
-
-        #endregion
-
         #region Adds
 
-        private async Task<T> Add(T entity)
+        public async Task InsertAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             var storableEntity = _mapper.MapToStorable(entity);
             var succeed = await _aggreateStorage.TryAddAsync(_transaction, entity.Id, storableEntity);
 
-            if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
-            return entity;
-        }
-
-        public async Task InsertAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await Add(entity);
+            if (!succeed)
+            {
+                throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
+            }
         }
 
         public async Task InsertAsync(params T[] entities)
@@ -97,14 +83,38 @@
 
         #region Updates
 
-        public async Task Update(string id, T entity)
+        public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var oldEntityt = (await _aggreateStorage.TryGetValueAsync(_transaction, id)).Value;
+            var oldEntityt = (await _aggreateStorage.TryGetValueAsync(_transaction, entity.Id)).Value;
             var storableEntity = _mapper.MapToStorable(entity);
 
             var succeed =
                 await _aggreateStorage.TryUpdateAsync(_transaction, entity.Id, storableEntity, oldEntityt);
-            if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {id}");
+            if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
+        }
+
+        public async Task UpdateAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            foreach (var entity in entities)
+            {
+                await UpdateAsync(entity, cancellationToken);
+            }
+        }
+
+        public async Task UpdateAsync(params T[] entities)
+        {
+            foreach (var entity in entities)
+            {
+                await UpdateAsync(entity);
+            }
+        }
+
+        public async Task UpdateAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                await UpdateAsync(entity);
+            }
         }
 
         public void Update(T entity)
@@ -132,6 +142,37 @@
             return _aggreateStorage.TryRemoveAsync(_transaction, id);
         }
 
+        public async Task DeleteAsync(T entity)
+        {
+            await Delete(entity);
+        }
+
+        public async Task DeleteAsync(params T[] entities)
+        {
+            foreach (var entity in entities)
+            {
+                await Delete(entity);
+            }
+        }
+
+        public async Task DeleteAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                await Delete(entity);
+            }
+        }
+
+        public Task DeleteAsync(object id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(object id)
+        {
+            throw new NotImplementedException();
+        }
+
         void IRepository<T>.Delete(T entity)
         {
             throw new NotImplementedException();
@@ -147,9 +188,15 @@
             throw new NotImplementedException();
         }
 
-        public void Delete(object id)
+        #endregion
+
+        #region Querys
+
+        public async Task<T> Find(string id)
         {
-            throw new NotImplementedException();
+            var entity = (await _aggreateStorage.TryGetValueAsync(_transaction, id)).Value;
+            var coreEntity = _mapper.MapToCore(entity);
+            return coreEntity;
         }
 
         #endregion

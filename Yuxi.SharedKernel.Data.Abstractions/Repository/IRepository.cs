@@ -25,6 +25,13 @@
 
         void Update(IEnumerable<TEntity> entities);
 
+        Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task UpdateAsync(params TEntity[] entities);
+
+        Task UpdateAsync(IEnumerable<TEntity> entities,
+            CancellationToken cancellationToken = default(CancellationToken));
+
         void Delete(object id);
 
         void Delete(TEntity entity);
@@ -32,5 +39,13 @@
         void Delete(params TEntity[] entities);
 
         void Delete(IEnumerable<TEntity> entities);
+
+        Task DeleteAsync(object id);
+
+        Task DeleteAsync(TEntity entity);
+
+        Task DeleteAsync(params TEntity[] entities);
+
+        Task DeleteAsync(IEnumerable<TEntity> entities);
     }
 }

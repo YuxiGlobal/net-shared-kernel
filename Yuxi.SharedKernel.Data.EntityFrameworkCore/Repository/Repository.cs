@@ -61,6 +61,21 @@
 
         public void Update(IEnumerable<TEntity> entities) => DbSet.UpdateRange(entities);
 
+        public Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(params TEntity[] entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(TEntity entity) => DbSet.Remove(entity);
 
         public void Delete(object id)
@@ -88,5 +103,25 @@
         public void Delete(params TEntity[] entities) => DbSet.RemoveRange(entities);
 
         public void Delete(IEnumerable<TEntity> entities) => DbSet.RemoveRange(entities);
+
+        public Task DeleteAsync(object id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(params TEntity[] entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(IEnumerable<TEntity> entities)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
