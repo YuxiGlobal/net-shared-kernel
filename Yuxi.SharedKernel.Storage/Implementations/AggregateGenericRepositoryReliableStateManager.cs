@@ -1,22 +1,18 @@
 ﻿namespace Yuxi.SharedKernel.Storage.Implementations
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Data.Contracts.Query;
-    using Data.Implementations.Entity;
-    using Data.Contracts.Repository;
-    using Specification.Base;
     using Specification.Contracts;
     using Specification.Implementations;
     using Contracts;
     using Microsoft.ServiceFabric.Data;
     using Microsoft.ServiceFabric.Data.Collections;
-    using TrackableEntities;
+    using Data.Abstractions.Entities;
+    using Data.Abstractions.Repository;
 
-    public class AggregateGenericRepositoryReliableStateManager<T, TI> : IRepositoryAsync<T> where T : Entity
+    public class AggregateGenericRepositoryReliableStateManager<T, TI> : IRepository<T> where T : Entity
         where TI : IStorableItem
     {
         #region Read Only Properties
@@ -48,37 +44,51 @@
             return coreEntity;
         }
 
-        public T Find(params object[] keyValues)
+        #endregion
+
+        #region Adds
+
+        private async Task<T> Add(T entity)
+        {
+            var storableEntity = _mapper.MapToStorable(entity);
+            var succeed = await _aggreateStorage.TryAddAsync(_transaction, entity.Id, storableEntity);
+
+            if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
+            return entity;
+        }
+
+        public async Task InsertAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Add(entity);
+        }
+
+        public async Task InsertAsync(params T[] entities)
+        {
+            foreach (var entity in entities)
+            {
+                await InsertAsync(entity);
+            }
+        }
+
+        public async Task InsertAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            foreach (var entity in entities)
+            {
+                await InsertAsync(entity, cancellationToken);
+            }
+        }
+
+        public void Insert(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public void UpsertGraph(T entity)
+        public void Insert(params T[] entities)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryFluent<T> Query(ExpressionSpecification<T> specification)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryFluent<T> Query()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<T> Queryable()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<T> FindAsync(params object[] keyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<T> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
+        public void Insert(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
@@ -99,34 +109,15 @@
 
         public void Update(T entity)
         {
-            var id = entity.Id;
-
-            Task.Run(() => Update(id, entity));
+            throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region Adds
-
-        public async Task<T> Add(T entity)
+        public void Update(params T[] entities)
         {
-            var storableEntity = _mapper.MapToStorable(entity);
-            var succeed = await _aggreateStorage.TryAddAsync(_transaction, entity.Id, storableEntity);
-
-            if (!succeed) throw new Exception("Something went wrong when trying to add the turn");
-            return entity;
+            throw new NotImplementedException();
         }
 
-        void IRepository<T>.Add(T entity)
-        {
-            Task.Run(() => Add(entity));
-        }
-
-        #endregion
-
-        #region Repositories
-
-        public IRepository<T1> GetRepository<T1>() where T1 : class, ITrackable
+        public void Update(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
@@ -143,20 +134,20 @@
 
         void IRepository<T>.Delete(T entity)
         {
-            Task.Run(() => Delete(entity));
+            throw new NotImplementedException();
         }
 
-        public void Delete(params object[] keyValues)
+        public void Delete(params T[] entities)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(params object[] keyValues)
+        public void Delete(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues)
+        public void Delete(object id)
         {
             throw new NotImplementedException();
         }
@@ -192,6 +183,6 @@
             return result;
         }
 
-        #endregion
+        #endregion   
     }
 }
