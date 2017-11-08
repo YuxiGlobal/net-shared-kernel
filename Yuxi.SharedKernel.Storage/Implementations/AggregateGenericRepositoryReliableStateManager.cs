@@ -56,7 +56,8 @@
             }
         }
 
-        public async Task InsertAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task InsertAsync(IEnumerable<T> entities,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             foreach (var entity in entities)
             {
@@ -93,7 +94,8 @@
             if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
         }
 
-        public async Task UpdateAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task UpdateAsync(IEnumerable<T> entities,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             foreach (var entity in entities)
             {
@@ -230,6 +232,6 @@
             return result;
         }
 
-        #endregion   
+        #endregion
     }
 }

@@ -71,7 +71,8 @@
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken))
+        public Task UpdateAsync(IEnumerable<TEntity> entities,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
