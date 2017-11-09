@@ -6,8 +6,9 @@
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Storage;
-    using Abstractions.Repository;
-    using Abstractions.UnitOfWork;
+    using Data.Abstractions.Repository;
+    using Data.Abstractions.UnitOfWork;
+    using Abstractions;
 
     public class UnitOfWork<TContext> : IRepositoryFactory, IUnitOfWork<TContext> where TContext : DbContext
     {
@@ -38,7 +39,7 @@
             return (IRepository<TEntity>) _commandRepositories[type];
         }
 
-        public IQueryableRepository<TEntity> GetQueryableRepository<TEntity>() where TEntity : class
+        public Abstractions.IQueryableRepository<TEntity> GetQueryableRepository<TEntity>() where TEntity : class
         {
             if (_queryableRepositories == null)
             {
@@ -51,7 +52,7 @@
                 _queryableRepositories[type] = new QueryableRepository<TEntity>(DbContext);
             }
 
-            return (IQueryableRepository<TEntity>) _queryableRepositories[type];
+            return (Abstractions.IQueryableRepository<TEntity>) _queryableRepositories[type];
         }
 
         public int ExecuteSqlCommand(string sql, params object[] parameters) =>
@@ -90,6 +91,12 @@
                     foreach (var unitOfWork in unitOfWorks)
                     {
                         var uow = unitOfWork as UnitOfWork<DbContext>;
+
+                        if (uow == null)
+                        {
+                            continue;
+                        }
+
                         uow.DbContext.Database.UseTransaction(transaction.GetDbTransaction());
                         count += await uow.SaveChangesAsync(ensureAutoHistory);
                     }
@@ -100,11 +107,11 @@
 
                     return count;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     transaction.Rollback();
 
-                    throw ex;
+                    throw;
                 }
             }
         }

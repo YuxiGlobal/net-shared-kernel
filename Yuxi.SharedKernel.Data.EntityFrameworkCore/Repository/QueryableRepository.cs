@@ -7,8 +7,8 @@
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Query;
-    using Abstractions.PagedList;
-    using Abstractions.Repository;
+    using Data.Abstractions.PagedList;
+    using Abstractions;
     using PagedList;
     using Specification.Contracts;
 
@@ -23,7 +23,7 @@
             DbSet = DbContext.Set<TEntity>();
         }
 
-        public IPagedList<TEntity> GetPagedList(ISpecification<TEntity> predicate = null,
+        public IPagedList<TEntity> GetPagedList(ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             int pageIndex = 0,
@@ -41,9 +41,9 @@
                 query = include(query);
             }
 
-            if (predicate != null)
+            if (businessSpecification != null)
             {
-                query = query.Where(entityToTest => predicate.IsSatisfiedBy(entityToTest));
+                query = query.Where(entityToTest => businessSpecification.IsSatisfiedBy(entityToTest));
             }
 
             return orderBy != null
@@ -51,7 +51,7 @@
                 : query.ToPagedList(pageIndex, pageSize);
         }
 
-        public Task<IPagedList<TEntity>> GetPagedListAsync(ISpecification<TEntity> predicate = null,
+        public Task<IPagedList<TEntity>> GetPagedListAsync(ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             int pageIndex = 0,
@@ -70,9 +70,9 @@
                 query = include(query);
             }
 
-            if (predicate != null)
+            if (businessSpecification != null)
             {
-                query = query.Where(entityToTest => predicate.IsSatisfiedBy(entityToTest));
+                query = query.Where(entityToTest => businessSpecification.IsSatisfiedBy(entityToTest));
             }
 
             return orderBy?.Invoke(query).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken) ??
@@ -80,7 +80,7 @@
         }
 
         public IPagedList<TResult> GetPagedList<TResult>(Expression<Func<TEntity, TResult>> selector,
-            ISpecification<TEntity> predicate = null,
+            ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             int pageIndex = 0,
@@ -99,9 +99,9 @@
                 query = include(query);
             }
 
-            if (predicate != null)
+            if (businessSpecification != null)
             {
-                query = query.Where(entityToTest => predicate.IsSatisfiedBy(entityToTest));
+                query = query.Where(entityToTest => businessSpecification.IsSatisfiedBy(entityToTest));
             }
 
             return orderBy != null
@@ -110,7 +110,7 @@
         }
 
         public Task<IPagedList<TResult>> GetPagedListAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
-            ISpecification<TEntity> predicate = null,
+            ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             int pageIndex = 0,
@@ -131,9 +131,9 @@
                 query = include(query);
             }
 
-            if (predicate != null)
+            if (businessSpecification != null)
             {
-                query = query.Where(entityToTest => predicate.IsSatisfiedBy(entityToTest));
+                query = query.Where(entityToTest => businessSpecification.IsSatisfiedBy(entityToTest));
             }
 
             return orderBy?.Invoke(query).Select(selector)
@@ -141,7 +141,7 @@
                        .ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
         }
 
-        public TEntity GetFirstOrDefault(ISpecification<TEntity> predicate = null,
+        public TEntity GetFirstOrDefault(ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true)
@@ -158,16 +158,16 @@
                 query = include(query);
             }
 
-            if (predicate != null)
+            if (businessSpecification != null)
             {
-                query = query.Where(entityToTest => predicate.IsSatisfiedBy(entityToTest));
+                query = query.Where(entityToTest => businessSpecification.IsSatisfiedBy(entityToTest));
             }
 
             return orderBy != null ? orderBy(query).FirstOrDefault() : query.FirstOrDefault();
         }
 
         public TResult GetFirstOrDefault<TResult>(Expression<Func<TEntity, TResult>> selector,
-            ISpecification<TEntity> predicate = null,
+            ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true)
@@ -184,9 +184,9 @@
                 query = include(query);
             }
 
-            if (predicate != null)
+            if (businessSpecification != null)
             {
-                query = query.Where(entityToTest => predicate.IsSatisfiedBy(entityToTest));
+                query = query.Where(entityToTest => businessSpecification.IsSatisfiedBy(entityToTest));
             }
 
             return orderBy != null

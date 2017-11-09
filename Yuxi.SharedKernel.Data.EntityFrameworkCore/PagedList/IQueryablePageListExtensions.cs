@@ -5,9 +5,9 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using Abstractions.PagedList;
+    using Data.Abstractions.PagedList;
 
-    internal static class IQueryablePageListExtensions
+    public static class IQueryablePageListExtensions
     {
         public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> source, int pageIndex,
             int pageSize, int indexFrom = 0, CancellationToken cancellationToken = default(CancellationToken))

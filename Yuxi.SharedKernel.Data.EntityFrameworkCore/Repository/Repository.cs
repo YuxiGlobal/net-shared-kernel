@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using Abstractions.Repository;
+    using Data.Abstractions.Repository;
 
     internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
@@ -32,12 +32,6 @@
         public Task InsertAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
         {
             return DbSet.AddAsync(entity, cancellationToken);
-
-            // Shadow properties?
-            //var property = _dbContext.Entry(entity).Property("Created");
-            //if (property != null) {
-            //property.CurrentValue = DateTime.Now;
-            //}
         }
 
         public Task InsertAsync(params TEntity[] entities) => DbSet.AddRangeAsync(entities);
@@ -49,12 +43,6 @@
         public void Update(TEntity entity)
         {
             DbSet.Update(entity);
-
-            // Shadow properties?
-            //var property = _dbContext.Entry(entity).Property("LastUpdated");
-            //if(property != null) {
-            //property.CurrentValue = DateTime.Now;
-            //}
         }
 
         public void Update(params TEntity[] entities) => DbSet.UpdateRange(entities);

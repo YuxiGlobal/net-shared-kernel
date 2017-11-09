@@ -94,8 +94,7 @@
             if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
         }
 
-        public async Task UpdateAsync(IEnumerable<T> entities,
-            CancellationToken cancellationToken = default(CancellationToken))
+        public async Task UpdateAsync(IEnumerable<T> entities, CancellationToken cancellationToken)
         {
             foreach (var entity in entities)
             {
@@ -103,15 +102,12 @@
             }
         }
 
-        public async Task UpdateAsync(params T[] entities)
+        public async Task UpdateAsync(IEnumerable<T> entities)
         {
-            foreach (var entity in entities)
-            {
-                await UpdateAsync(entity);
-            }
+            await UpdateAsync(entities, new CancellationToken());
         }
 
-        public async Task UpdateAsync(IEnumerable<T> entities)
+        public async Task UpdateAsync(params T[] entities)
         {
             foreach (var entity in entities)
             {

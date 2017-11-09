@@ -1,10 +1,9 @@
-﻿namespace Yuxi.SharedKernel.Data.EntityFrameworkCore.PagedList
+﻿namespace Yuxi.SharedKernel.Data.Abstractions.PagedList
 {
     using System;
     using System.Collections.Generic;
-    using Abstractions.PagedList;
 
-    internal static class IEnumerablePagedListExtensions
+    public static class IEnumerablePagedListExtensions
     {
         public static IPagedList<T> ToPagedList<T>(this IEnumerable<T> source, int pageIndex, int pageSize,
             int indexFrom = 0) => new PagedList<T>(source, pageIndex, pageSize, indexFrom);

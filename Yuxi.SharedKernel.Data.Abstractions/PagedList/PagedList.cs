@@ -1,11 +1,10 @@
-﻿namespace Yuxi.SharedKernel.Data.EntityFrameworkCore.PagedList
+﻿namespace Yuxi.SharedKernel.Data.Abstractions.PagedList
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Abstractions.PagedList;
 
-    internal class PagedList<T> : IPagedList<T>
+    public class PagedList<T> : IPagedList<T>
     {
         public int PageIndex { get; set; }
 
@@ -24,7 +23,7 @@
 
         public bool HasNextPage => PageIndex - IndexFrom + 1 < TotalPages;
 
-        internal PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int indexFrom)
+        public PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int indexFrom)
         {
             if (indexFrom > pageIndex)
             {
@@ -41,10 +40,10 @@
             Items = source.Skip((PageIndex - IndexFrom) * PageSize).Take(PageSize).ToList();
         }
 
-        internal PagedList() => Items = new T[0];
+        public PagedList() => Items = new T[0];
     }
 
-    internal class PagedList<TSource, TResult> : IPagedList<TResult>
+    public class PagedList<TSource, TResult> : IPagedList<TResult>
     {
         public int PageIndex { get; }
 
@@ -94,7 +93,7 @@
         }
     }
 
-    internal static class PagedList
+    public static class PagedList
     {
         public static IPagedList<T> Empty<T>() => new PagedList<T>();
 

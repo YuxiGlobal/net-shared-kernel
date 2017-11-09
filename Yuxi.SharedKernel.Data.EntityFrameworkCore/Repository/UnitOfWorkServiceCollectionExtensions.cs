@@ -2,8 +2,8 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Abstractions.Repository;
-    using Abstractions.UnitOfWork;
+    using Data.Abstractions.UnitOfWork;
+    using Abstractions;
 
     internal static class UnitOfWorkServiceCollectionExtensions
     {
