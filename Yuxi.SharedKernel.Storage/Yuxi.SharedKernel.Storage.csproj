@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Yuxi.SharedKernel.Data.Abstractions\Yuxi.SharedKernel.Data.Abstractions.csproj" />
-    <ProjectReference Include="..\Yuxi.SharedKernel.Specification\Yuxi.SharedKernel.Specification.csproj" />
+    <ProjectReference Include="..\Yuxi.SharedKernel.Specification\Yuxi.SharedKernel.Patterns.Specification.csproj" />
   </ItemGroup>
 
   <ItemGroup>

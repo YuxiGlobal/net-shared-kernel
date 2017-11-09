@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yuxi.SharedKernel.Specification", "Yuxi.SharedKernel.Specification\Yuxi.SharedKernel.Specification.csproj", "{57D38CFE-F0EB-4F5A-BA78-BD3E4A84CC5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yuxi.SharedKernel.Patterns.Specification", "Yuxi.SharedKernel.Specification\Yuxi.SharedKernel.Patterns.Specification.csproj", "{57D38CFE-F0EB-4F5A-BA78-BD3E4A84CC5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yuxi.SharedKernel.Storage", "Yuxi.SharedKernel.Storage\Yuxi.SharedKernel.Storage.csproj", "{642718DA-8548-40C7-9177-4E4C7AB06BE6}"
 EndProject

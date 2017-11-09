@@ -10,7 +10,7 @@
     using Data.Abstractions.PagedList;
     using Abstractions;
     using PagedList;
-    using Specification.Contracts;
+    using Patterns.Specification.Contracts;
 
     internal class QueryableRepository<TEntity> : IQueryableRepository<TEntity> where TEntity : class
     {

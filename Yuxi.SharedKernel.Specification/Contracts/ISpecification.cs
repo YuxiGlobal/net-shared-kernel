@@ -1,4 +1,4 @@
-﻿namespace Yuxi.SharedKernel.Specification.Contracts
+﻿namespace Yuxi.SharedKernel.Patterns.Specification.Contracts
 {
     public interface ISpecification<TEntity>
     {

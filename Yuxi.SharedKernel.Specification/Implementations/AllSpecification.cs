@@ -1,4 +1,4 @@
-﻿namespace Yuxi.SharedKernel.Specification.Implementations
+﻿namespace Yuxi.SharedKernel.Patterns.Specification.Implementations
 {
     using Base;
 

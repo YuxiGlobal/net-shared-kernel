@@ -1,4 +1,4 @@
-﻿namespace Yuxi.SharedKernel.Specification.Base
+﻿namespace Yuxi.SharedKernel.Patterns.Specification.Base
 {
     using Contracts;
     using Implementations;

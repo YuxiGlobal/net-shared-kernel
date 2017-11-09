@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Specification.Contracts;
-    using Specification.Implementations;
+    using Patterns.Specification.Contracts;
+    using Patterns.Specification.Implementations;
     using Contracts;
     using Microsoft.ServiceFabric.Data;
     using Microsoft.ServiceFabric.Data.Collections;

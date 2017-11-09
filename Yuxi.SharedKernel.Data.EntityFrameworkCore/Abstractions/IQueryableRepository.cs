@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore.Query;
     using Data.Abstractions.PagedList;
-    using Specification.Contracts;
+    using Patterns.Specification.Contracts;
 
     public interface IQueryableRepository<TEntity> : Data.Abstractions.Repository.IQueryableRepository<TEntity>
     {
