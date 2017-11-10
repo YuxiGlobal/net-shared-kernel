@@ -8,6 +8,8 @@
 
     public interface IQueryableRepository<TEntity>
     {
+        #region Public Methods
+
         IQueryable<TEntity> FromSql(string sql, params object[] parameters);
 
         TEntity Find(params object[] keyValues);
@@ -17,5 +19,7 @@
         Task<TEntity> FindAsync(object[] keyValues, CancellationToken cancellationToken);
 
         int Count(Expression<Func<TEntity, bool>> predicate = null);
+
+        #endregion
     }
 }

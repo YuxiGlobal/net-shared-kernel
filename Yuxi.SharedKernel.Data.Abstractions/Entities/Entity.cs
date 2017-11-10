@@ -2,6 +2,10 @@
 {
     public abstract class Entity
     {
+        #region Public Properties
+
         public string Id { get; set; }
+
+        #endregion
     }
 }

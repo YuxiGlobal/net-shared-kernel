@@ -9,6 +9,8 @@
 
     public static class IQueryablePageListExtensions
     {
+        #region Public Static Methods
+
         public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> source, int pageIndex,
             int pageSize, int indexFrom = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -34,5 +36,7 @@
 
             return pagedList;
         }
+
+        #endregion
     }
 }

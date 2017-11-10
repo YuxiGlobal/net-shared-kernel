@@ -14,14 +14,25 @@
 
     internal class QueryableRepository<TEntity> : IQueryableRepository<TEntity> where TEntity : class
     {
+        #region Protected Read Only Properties
+
         protected readonly DbContext DbContext;
+
         protected readonly DbSet<TEntity> DbSet;
+
+        #endregion
+
+        #region Constructors
 
         public QueryableRepository(DbContext dbContext)
         {
             DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             DbSet = DbContext.Set<TEntity>();
         }
+
+        #endregion
+
+        #region Public Methods
 
         public IPagedList<TEntity> GetPagedList(ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -205,5 +216,7 @@
 
         public int Count(Expression<Func<TEntity, bool>> predicate = null) =>
             predicate == null ? DbSet.Count() : DbSet.Count(predicate);
+
+        #endregion
     }
 }

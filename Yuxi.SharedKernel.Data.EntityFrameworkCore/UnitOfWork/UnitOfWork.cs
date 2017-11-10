@@ -1,4 +1,4 @@
-﻿namespace Yuxi.SharedKernel.Data.EntityFrameworkCore.Repository
+﻿namespace Yuxi.SharedKernel.Data.EntityFrameworkCore.UnitOfWork
 {
     using System;
     using System.Collections.Generic;
@@ -8,20 +8,37 @@
     using Microsoft.EntityFrameworkCore.Storage;
     using Data.Abstractions.Repository;
     using Data.Abstractions.UnitOfWork;
+    using Repository;
     using Abstractions;
 
     public class UnitOfWork<TContext> : IRepositoryFactory, IUnitOfWork<TContext> where TContext : DbContext
     {
+        #region Private Members
+
         private bool _disposed;
+
         private Dictionary<Type, object> _commandRepositories;
+
         private Dictionary<Type, object> _queryableRepositories;
 
+        #endregion
+
+        #region Public Read Only Properties
+
         public TContext DbContext { get; }
+
+        #endregion
+
+        #region Constructors
 
         public UnitOfWork(TContext context)
         {
             DbContext = context ?? throw new ArgumentNullException(nameof(context));
         }
+
+        #endregion
+
+        #region Public Methods
 
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
@@ -138,5 +155,7 @@
 
             _disposed = true;
         }
+
+        #endregion
     }
 }

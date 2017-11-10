@@ -11,14 +11,27 @@
 
     internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
+        #region Protected Read Only Properties
+
         protected readonly DbContext DbContext;
+
         protected readonly DbSet<TEntity> DbSet;
+
+        #endregion
+
+        #region Constructors
 
         public Repository(DbContext dbContext)
         {
             DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             DbSet = DbContext.Set<TEntity>();
         }
+
+        #endregion
+
+        #region Public Methods
+
+        #region Inserts
 
         public void Insert(TEntity entity)
         {
@@ -39,6 +52,10 @@
         public Task InsertAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken)) =>
             DbSet.AddRangeAsync(entities, cancellationToken);
+
+        #endregion
+
+        #region Updates
 
         public void Update(TEntity entity)
         {
@@ -64,6 +81,10 @@
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Deletes
 
         public void Delete(TEntity entity) => DbSet.Remove(entity);
 
@@ -112,5 +133,9 @@
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #endregion
     }
 }

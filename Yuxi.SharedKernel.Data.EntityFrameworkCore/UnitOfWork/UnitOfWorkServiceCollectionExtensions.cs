@@ -1,12 +1,14 @@
-﻿namespace Yuxi.SharedKernel.Data.EntityFrameworkCore.Repository
+﻿namespace Yuxi.SharedKernel.Data.EntityFrameworkCore.UnitOfWork
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Data.Abstractions.UnitOfWork;
     using Abstractions;
 
-    internal static class UnitOfWorkServiceCollectionExtensions
+    public static class UnitOfWorkServiceCollectionExtensions
     {
+        #region Public Static Methods
+
         public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection services)
             where TContext : DbContext
         {
@@ -54,5 +56,7 @@
 
             return services;
         }
+
+        #endregion
     }
 }

@@ -4,6 +4,8 @@
 
     public interface IPagedList<T>
     {
+        #region Public Read Only Properties
+
         int IndexFrom { get; }
 
         int PageIndex { get; }
@@ -19,5 +21,7 @@
         bool HasPreviousPage { get; }
 
         bool HasNextPage { get; }
+
+        #endregion
     }
 }

@@ -6,6 +6,10 @@
 
     public interface IRepository<in TEntity> where TEntity : class
     {
+        #region Public Methods
+
+        #region Inserts
+
         void Insert(TEntity entity);
 
         void Insert(params TEntity[] entities);
@@ -19,6 +23,10 @@
         Task InsertAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken));
 
+        #endregion
+
+        #region Updates
+
         void Update(TEntity entity);
 
         void Update(params TEntity[] entities);
@@ -31,6 +39,10 @@
 
         Task UpdateAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default(CancellationToken));
+
+        #endregion
+
+        #region Deletes
 
         void Delete(object id);
 
@@ -47,5 +59,9 @@
         Task DeleteAsync(params TEntity[] entities);
 
         Task DeleteAsync(IEnumerable<TEntity> entities);
+
+        #endregion
+
+        #endregion
     }
 }

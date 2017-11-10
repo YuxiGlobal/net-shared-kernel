@@ -6,6 +6,8 @@
 
     public class PagedList<T> : IPagedList<T>
     {
+        #region Public Properties
+
         public int PageIndex { get; set; }
 
         public int PageSize { get; set; }
@@ -16,12 +18,19 @@
 
         public int IndexFrom { get; set; }
 
-
         public IList<T> Items { get; set; }
+        
+        #endregion
+
+        #region Public Read Only Properties
 
         public bool HasPreviousPage => PageIndex - IndexFrom > 0;
 
         public bool HasNextPage => PageIndex - IndexFrom + 1 < TotalPages;
+
+        #endregion
+
+        #region Constructors
 
         public PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int indexFrom)
         {
@@ -41,10 +50,14 @@
         }
 
         public PagedList() => Items = new T[0];
+
+        #endregion
     }
 
     public class PagedList<TSource, TResult> : IPagedList<TResult>
     {
+        #region Public Read Only Properties
+
         public int PageIndex { get; }
 
         public int PageSize { get; }
@@ -60,6 +73,10 @@
         public bool HasPreviousPage => PageIndex - IndexFrom > 0;
 
         public bool HasNextPage => PageIndex - IndexFrom + 1 < TotalPages;
+
+        #endregion
+
+        #region Constructors
 
         public PagedList(IEnumerable<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter,
             int pageIndex, int pageSize, int indexFrom)
@@ -91,14 +108,20 @@
 
             Items = new List<TResult>(converter(source.Items));
         }
+
+        #endregion
     }
 
     public static class PagedList
     {
+        #region Public Static Methods
+
         public static IPagedList<T> Empty<T>() => new PagedList<T>();
 
         public static IPagedList<TResult> From<TResult, TSource>(IPagedList<TSource> source,
             Func<IEnumerable<TSource>, IEnumerable<TResult>> converter) =>
             new PagedList<TSource, TResult>(source, converter);
+
+        #endregion
     }
 }

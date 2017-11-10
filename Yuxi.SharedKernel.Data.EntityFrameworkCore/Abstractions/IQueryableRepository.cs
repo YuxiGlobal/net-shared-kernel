@@ -11,6 +11,8 @@
 
     public interface IQueryableRepository<TEntity> : Data.Abstractions.Repository.IQueryableRepository<TEntity>
     {
+        #region Public Methods
+
         IPagedList<TEntity> GetPagedList(ISpecification<TEntity> businessSpecification = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
@@ -53,5 +55,7 @@
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true);
+
+        #endregion
     }
 }
