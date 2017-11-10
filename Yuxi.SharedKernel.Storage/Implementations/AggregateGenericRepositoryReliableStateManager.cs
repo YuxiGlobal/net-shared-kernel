@@ -1,22 +1,18 @@
 ﻿namespace Yuxi.SharedKernel.Storage.Implementations
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Data.Contracts.Query;
-    using Data.Implementations.Entity;
-    using Data.Contracts.Repository;
-    using Specification.Base;
-    using Specification.Contracts;
-    using Specification.Implementations;
+    using Patterns.Specification.Contracts;
+    using Patterns.Specification.Implementations;
     using Contracts;
     using Microsoft.ServiceFabric.Data;
     using Microsoft.ServiceFabric.Data.Collections;
-    using TrackableEntities;
+    using Data.Abstractions.Entities;
+    using Data.Abstractions.Repository;
 
-    public class AggregateGenericRepositoryReliableStateManager<T, TI> : IRepositoryAsync<T> where T : Entity
+    public class AggregateGenericRepositoryReliableStateManager<T, TI> : IRepository<T> where T : Entity
         where TI : IStorableItem
     {
         #region Read Only Properties
@@ -39,46 +35,47 @@
 
         #endregion
 
-        #region Querys
+        #region Adds
 
-        public async Task<T> Find(string id)
+        public async Task InsertAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var entity = (await _aggreateStorage.TryGetValueAsync(_transaction, id)).Value;
-            var coreEntity = _mapper.MapToCore(entity);
-            return coreEntity;
+            var storableEntity = _mapper.MapToStorable(entity);
+            var succeed = await _aggreateStorage.TryAddAsync(_transaction, entity.Id, storableEntity);
+
+            if (!succeed)
+            {
+                throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
+            }
         }
 
-        public T Find(params object[] keyValues)
+        public async Task InsertAsync(params T[] entities)
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                await InsertAsync(entity);
+            }
         }
 
-        public void UpsertGraph(T entity)
+        public async Task InsertAsync(IEnumerable<T> entities,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                await InsertAsync(entity, cancellationToken);
+            }
         }
 
-        public IQueryFluent<T> Query(ExpressionSpecification<T> specification)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryFluent<T> Query()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<T> Queryable()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<T> FindAsync(params object[] keyValues)
+        public void Insert(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
+        public void Insert(params T[] entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
@@ -87,46 +84,48 @@
 
         #region Updates
 
-        public async Task Update(string id, T entity)
+        public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var oldEntityt = (await _aggreateStorage.TryGetValueAsync(_transaction, id)).Value;
+            var oldEntityt = (await _aggreateStorage.TryGetValueAsync(_transaction, entity.Id)).Value;
             var storableEntity = _mapper.MapToStorable(entity);
 
             var succeed =
                 await _aggreateStorage.TryUpdateAsync(_transaction, entity.Id, storableEntity, oldEntityt);
-            if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {id}");
+            if (!succeed) throw new Exception($"Something went wrong when trying to update the entity {entity.Id}");
+        }
+
+        public async Task UpdateAsync(IEnumerable<T> entities, CancellationToken cancellationToken)
+        {
+            foreach (var entity in entities)
+            {
+                await UpdateAsync(entity, cancellationToken);
+            }
+        }
+
+        public async Task UpdateAsync(IEnumerable<T> entities)
+        {
+            await UpdateAsync(entities, new CancellationToken());
+        }
+
+        public async Task UpdateAsync(params T[] entities)
+        {
+            foreach (var entity in entities)
+            {
+                await UpdateAsync(entity);
+            }
         }
 
         public void Update(T entity)
         {
-            var id = entity.Id;
-
-            Task.Run(() => Update(id, entity));
+            throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region Adds
-
-        public async Task<T> Add(T entity)
+        public void Update(params T[] entities)
         {
-            var storableEntity = _mapper.MapToStorable(entity);
-            var succeed = await _aggreateStorage.TryAddAsync(_transaction, entity.Id, storableEntity);
-
-            if (!succeed) throw new Exception("Something went wrong when trying to add the turn");
-            return entity;
+            throw new NotImplementedException();
         }
 
-        void IRepository<T>.Add(T entity)
-        {
-            Task.Run(() => Add(entity));
-        }
-
-        #endregion
-
-        #region Repositories
-
-        public IRepository<T1> GetRepository<T1>() where T1 : class, ITrackable
+        public void Update(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
@@ -141,24 +140,61 @@
             return _aggreateStorage.TryRemoveAsync(_transaction, id);
         }
 
+        public async Task DeleteAsync(T entity)
+        {
+            await Delete(entity);
+        }
+
+        public async Task DeleteAsync(params T[] entities)
+        {
+            foreach (var entity in entities)
+            {
+                await Delete(entity);
+            }
+        }
+
+        public async Task DeleteAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                await Delete(entity);
+            }
+        }
+
+        public Task DeleteAsync(object id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(object id)
+        {
+            throw new NotImplementedException();
+        }
+
         void IRepository<T>.Delete(T entity)
         {
-            Task.Run(() => Delete(entity));
+            throw new NotImplementedException();
         }
 
-        public void Delete(params object[] keyValues)
+        public void Delete(params T[] entities)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(params object[] keyValues)
+        public void Delete(IEnumerable<T> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues)
+        #endregion
+
+        #region Querys
+
+        public async Task<T> Find(string id)
         {
-            throw new NotImplementedException();
+            var entity = (await _aggreateStorage.TryGetValueAsync(_transaction, id)).Value;
+            var coreEntity = _mapper.MapToCore(entity);
+            return coreEntity;
         }
 
         #endregion

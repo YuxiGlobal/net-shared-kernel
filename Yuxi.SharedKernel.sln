@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yuxi.SharedKernel.Specification", "Yuxi.SharedKernel.Specification\Yuxi.SharedKernel.Specification.csproj", "{57D38CFE-F0EB-4F5A-BA78-BD3E4A84CC5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yuxi.SharedKernel.Patterns.Specification", "Yuxi.SharedKernel.Specification\Yuxi.SharedKernel.Patterns.Specification.csproj", "{57D38CFE-F0EB-4F5A-BA78-BD3E4A84CC5F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yuxi.SharedKernel.Data", "Yuxi.SharedKernel.Data\Yuxi.SharedKernel.Data.csproj", "{F83E7A95-05AC-4EC0-9AAD-BD19A5785E76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yuxi.SharedKernel.Storage", "Yuxi.SharedKernel.Storage\Yuxi.SharedKernel.Storage.csproj", "{642718DA-8548-40C7-9177-4E4C7AB06BE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yuxi.SharedKernel.Storage", "Yuxi.SharedKernel.Storage\Yuxi.SharedKernel.Storage.csproj", "{642718DA-8548-40C7-9177-4E4C7AB06BE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yuxi.SharedKernel.Data.Abstractions", "Yuxi.SharedKernel.Data.Abstractions\Yuxi.SharedKernel.Data.Abstractions.csproj", "{5456188F-C491-4F20-A1C5-F20DD1000185}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yuxi.SharedKernel.Data.EntityFrameworkCore", "Yuxi.SharedKernel.Data.EntityFrameworkCore\Yuxi.SharedKernel.Data.EntityFrameworkCore.csproj", "{308069E1-20D4-47DF-B444-0654F0A6E32C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +21,18 @@ Global
 		{57D38CFE-F0EB-4F5A-BA78-BD3E4A84CC5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57D38CFE-F0EB-4F5A-BA78-BD3E4A84CC5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57D38CFE-F0EB-4F5A-BA78-BD3E4A84CC5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F83E7A95-05AC-4EC0-9AAD-BD19A5785E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F83E7A95-05AC-4EC0-9AAD-BD19A5785E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F83E7A95-05AC-4EC0-9AAD-BD19A5785E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F83E7A95-05AC-4EC0-9AAD-BD19A5785E76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{642718DA-8548-40C7-9177-4E4C7AB06BE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{642718DA-8548-40C7-9177-4E4C7AB06BE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{642718DA-8548-40C7-9177-4E4C7AB06BE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{642718DA-8548-40C7-9177-4E4C7AB06BE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5456188F-C491-4F20-A1C5-F20DD1000185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5456188F-C491-4F20-A1C5-F20DD1000185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5456188F-C491-4F20-A1C5-F20DD1000185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5456188F-C491-4F20-A1C5-F20DD1000185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308069E1-20D4-47DF-B444-0654F0A6E32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308069E1-20D4-47DF-B444-0654F0A6E32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308069E1-20D4-47DF-B444-0654F0A6E32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308069E1-20D4-47DF-B444-0654F0A6E32C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

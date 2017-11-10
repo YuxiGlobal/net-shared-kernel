@@ -1,9 +1,6 @@
 ﻿namespace Yuxi.SharedKernel.Storage.Contracts
 {
-    using TrackableEntities;
-
-    public interface IStorableEntityMapper<T, TI> where T : ITrackable
-        where TI : IStorableItem
+    public interface IStorableEntityMapper<T, TI> where TI : IStorableItem
     {
         #region Internal Properties
 
